@@ -1,11 +1,9 @@
 name: Deploy
 
-# Chỉ chạy khi push (hoặc merge PR) vào nhánh main
 on:
   push:
     branches: [main]
 
-# Không cho 2 lần deploy chạy chồng lên nhau
 concurrency:
   group: deploy-production
   cancel-in-progress: true
@@ -14,10 +12,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
 
       # ---------- 1. Build backend Go ----------
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v5.3.0
         with:
           go-version: '1.22'
           cache-dependency-path: be/go.sum
@@ -28,11 +26,10 @@ jobs:
 
       - name: Build binary Linux
         working-directory: be
-        # CGO_ENABLED=0 -> binary tĩnh, GOOS/GOARCH cho VPS Linux
         run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o note-backend .
 
       # ---------- 2. Build frontend React ----------
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4.2.0
         with:
           node-version: 20
           cache: npm
@@ -51,7 +48,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           port: ${{ secrets.VPS_PORT }}
           username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }} # Dùng SSH Key an toàn
+          key: ${{ secrets.VPS_SSH_KEY }}
           source: "be/note-backend,frontend/dist"
           target: /tmp/noteapp-deploy
 
@@ -65,20 +62,16 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             set -e
-            # Binary: Dùng mv (atomic) để thay thế file binary cũ an toàn
             mv /tmp/noteapp-deploy/be/note-backend /root/var/www/note-web/be/note-backend.new
             chmod +x /root/var/www/note-web/be/note-backend.new
             mv -f /root/var/www/note-web/be/note-backend.new /root/var/www/note-web/be/note-backend
 
-            # Frontend: Thay toàn bộ thư mục dist mới
             rm -rf /root/var/www/note-web/frontend/dist
             mv /tmp/noteapp-deploy/frontend/dist /root/var/www/note-web/frontend/dist
             rm -rf /tmp/noteapp-deploy
 
-            # Restart backend bằng PM2
             pm2 restart note-backend --update-env
 
-            # Kiểm tra Health Check sau khi deploy (fail ở đây workflow sẽ đỏ)
             sleep 2
             curl -fs http://127.0.0.1:5000/api/health
 
