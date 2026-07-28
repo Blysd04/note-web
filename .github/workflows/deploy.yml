@@ -74,6 +74,7 @@ jobs:
 
             sleep 2
             curl -fs http://127.0.0.1:5000/api/health
+            
 
       # ---------- 5. Thông báo Telegram ----------
       - name: Telegram — deploy thành công
