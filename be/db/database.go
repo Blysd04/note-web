@@ -13,9 +13,6 @@ var DB *sql.DB
 
 func InitDB() {
 	connStr := os.Getenv("DATABASE_URL")
-	if connStr == "" {
-		connStr = "postgres://noteuser:notepassword@127.0.0.1:5432/notedb?sslmode=disable"
-	}
 
 	var err error
 	DB, err = sql.Open("postgres", connStr)
