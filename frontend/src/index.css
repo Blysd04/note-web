@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-pastel-bg: #F0F4F8;       /* Xanh xám nhạt làm nền */
+  --color-pastel-card: #FFFFFF;     /* Trắng */
+  --color-pastel-primary: #8ECAE6;  /* Xanh blue pastel */
+  --color-pastel-hover: #219EBC;    /* Blue đậm hơn khi hover */
+  --color-pastel-text: #2B2D42;     /* Chữ xám đen dịu mắt */
+  --color-pastel-accent: #A8DADC;   /* Xanh ngọc pastel */
+  --color-pastel-danger: #E63946;   /* Đỏ pastel nhẹ cho nút xóa */
+
+  /* Priority Pastel Colors */
+  --color-priority-high-bg: #FEE2E2;     /* Đỏ pastel nhạt */
+  --color-priority-high-border: #FCA5A5;
+  --color-priority-high-text: #991B1B;
+
+  --color-priority-med-bg: #FEF3C7;      /* Vàng pastel nhạt */
+  --color-priority-med-border: #FCD34D;
+  --color-priority-med-text: #92400E;
+
+  --color-priority-low-bg: #E0F2FE;      /* Xanh dương pastel nhạt */
+  --color-priority-low-border: #7DD3FC;
+  --color-priority-low-text: #075985;
+}
+
+body {
+  background-color: var(--color-pastel-bg);
+  color: var(--color-pastel-text);
+  font-family: system-ui, -apple-system, sans-serif;
+}
