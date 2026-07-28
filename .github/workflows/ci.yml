@@ -17,7 +17,7 @@ jobs:
 
       - uses: actions/setup-go@v6          # Cài Go trên runner
         with:
-          go-version: '1.22'
+          go-version: '1.26'
           cache-dependency-path: be/go.sum
 
       - name: Kiểm tra lỗi tĩnh
