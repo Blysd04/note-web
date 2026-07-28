@@ -13,9 +13,9 @@ jobs:
       run:
         working-directory: be
     steps:
-      - uses: actions/checkout@v4          # Tải code về runner
+      - uses: actions/checkout@v5          # Tải code về runner
 
-      - uses: actions/setup-go@v5          # Cài Go trên runner
+      - uses: actions/setup-go@v6          # Cài Go trên runner
         with:
           go-version: '1.22'
           cache-dependency-path: be/go.sum
@@ -35,9 +35,9 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
           cache: npm
