@@ -61,7 +61,10 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            set -e
+            # --- Nạp môi trường NVM/PM2 ---
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            export PATH=$PATH:/usr/local/bin
             mv /tmp/noteapp-deploy/be/note-backend /root/var/www/note-web/be/note-backend.new
             chmod +x /root/var/www/note-web/be/note-backend.new
             mv -f /root/var/www/note-web/be/note-backend.new /root/var/www/note-web/be/note-backend
@@ -74,7 +77,7 @@ jobs:
 
             sleep 2
             curl -fs http://127.0.0.1:5000/api/health
-            
+
 
       # ---------- 5. Thông báo Telegram ----------
       - name: Telegram — deploy thành công
