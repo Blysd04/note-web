@@ -5,7 +5,7 @@
 ---
 
 ## 1. Tổng Quan Kiến Trúc & Luồng Hoạt Động
-
+```text
 [ Client / Web Browser ] 
        │ (HTTPS / Port 443)
        ▼
@@ -17,7 +17,7 @@
        └── /metrics & Grafana ──► [ Prometheus & Grafana Stack ]
                                     │
                                     └──► [ Alertmanager ] ──► [ Telegram Bot ]
-
+```
 ## 2. Công Nghệ & Hạ Tầng
 - Frontend: React.js (Build ra static files)
 - Backend: Go (REST API với 5 CRUD endpoints & /api/health)
@@ -28,6 +28,7 @@
 - Monitoring: Prometheus, Node Exporter, Grafana, Alertmanager
 
 ## 3. Cấu Trúc Thư Mục Dự ÁnPlaintext.
+```text
 ├── .github/workflows/
 │   ├── ci.yml              # CI Test & Build
 │   └── deploy.yml          # Pipeline Deploy tự động hoá hoàn chỉnh
@@ -40,6 +41,7 @@
 │   └── alert.rules.yml     # Định nghĩa 3+ quy tắc cảnh báo
 └── alertmanager/
     └── alertmanager.yml    # Cấu hình Telegram Webhook & templates
+```
 
 ## 4. Hướng Dẫn Vận Hành & Khởi Động Hệ Thống
 - Bước 1: Chạy Monitoring StackBash
@@ -52,11 +54,12 @@
     pm2 save
 
 ## 5. Địa Chỉ Truy Cập Dịch Vụ
-Dịch Vụ,Địa Chỉ Truy Cập,Ghi Chú
-Website chính,https://note-web.yetsir.click/,Chạy qua Nginx HTTPS
-Health Check API,https://note-web.yetsir.click/api/health,Dùng cho CI/CD check
-Grafana Dashboard,https://note-web.yetsir.click/grafana,Giám sát CPU/RAM/App
-Prometheus UI,http://127.0.0.1:9090,Chỉ truy cập nội bộ
+| Dịch Vụ | Địa Chỉ Truy Cập | Ghi Chú |
+| :--- | :--- | :--- |
+| **Website chính** | `https://note-web.yetsir.click/` | Chạy qua Nginx HTTPS |
+| **Health Check API** | `https://note-web.yetsir.click/api/health` | Dùng cho CI/CD check |
+| **Grafana Dashboard** | `https://note-web.yetsir.click/grafana` | Giám sát CPU/RAM/App |
+| **Prometheus UI** | `http://127.0.0.1:9090` | Chỉ truy cập nội bộ |
 
 ## 6. Cấu Hình Cảnh Báo & Runbook Xử Lý (Actionable Runbook)
 1️⃣ Rule AppDown (Mức độ: Critical)
