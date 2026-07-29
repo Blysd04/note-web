@@ -17,7 +17,7 @@ jobs:
       # ---------- 1. Build backend Go ----------
       - uses: actions/setup-go@v6
         with:
-          go-version: '1.26'
+          go-version: '1.22'
           cache-dependency-path: be/go.sum
 
       - name: Test backend
@@ -69,8 +69,8 @@ jobs:
             chmod +x /root/var/www/note-web/be/note-backend.new
             mv -f /root/var/www/note-web/be/note-backend.new /root/var/www/note-web/be/note-backend
 
-            rm -rf /root/var/www/note-web//dist
-            mv /tmp/noteapp-deploy//dist /root/var/www/note-web//dist
+            rm -rf /root/var/www/note-web/frontend/dist
+            mv /tmp/noteapp-deploy/frontend/dist /root/var/www/note-web/frontend/dist
             rm -rf /tmp/noteapp-deploy
 
             pm2 restart note-backend --update-env
