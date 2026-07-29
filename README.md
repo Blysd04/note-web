@@ -47,11 +47,13 @@
 - Bước 1: Chạy Monitoring StackBash
     docker compose up -d
 - Bước 2: Quản lý Process Backend với PM2Bash
-    # Kích hoạt startup cùng OS
+```text
+    #Kích hoạt startup cùng OS
     pm2 startup
 
-    # Lưu trạng thái PM2 (Bắt buộc sau mỗi thay đổi)
+    #ưu trạng thái PM2 (Bắt buộc sau mỗi thay đổi)
     pm2 save
+```
 
 ## 5. Địa Chỉ Truy Cập Dịch Vụ
 | Dịch Vụ | Địa Chỉ Truy Cập | Ghi Chú |
@@ -66,6 +68,7 @@
 - Điều kiện: Metric up == 0 kéo dài trong 0 phút.
 - Nguyên nhân: Backend bị crash, PM2 ngưng hoạt động hoặc VPS sập.
 - Runbook xử lý ngay:
+```text
     #1. SSH vào VPS và kiểm tra trạng thái PM2
     pm2 status
 
@@ -74,11 +77,13 @@
 
     #3. Khởi động lại ứng dụng
     pm2 restart note-backend
+```
 
 2️⃣ Rule HighCpuUsage (Mức độ: Warning)
 - Điều kiện: CPU trung bình > 80% trong cửa sổ [2m] và duy trì for: 1m.
 - Nguyên nhân: App bị lặp vô tận (infinite loop), bị DDoSS hoặc stress test,
 - Runbook xử lý ngay:
+```text
     #1. Kiểm tra tiến trình đang ngốn CPU
     top -b -n 1 | head -n 20
 
@@ -87,19 +92,26 @@
 
     #3. Kiểm tra log Nginx xem có bị tấn công traffic lớn hay không
     tail -f /var/log/nginx/access.log
+```
 3️⃣ Rule DiskSpaceLow (Mức độ: Warning)
 - Điều kiện: Dung lượng ổ đĩa trống < 15% duy trì trong 5 phút.
 - Nguyên nhân: Log PM2/Nginx quá lớn, Docker build cache tích tụ.
 - Runbook xử lý ngay:
+```text
     #1. Dọn dẹp log PM2
     pm2 flush
 
     #2. Dọn dẹp Docker images/cache thừa
     docker system prune -a -f
+```
 
 ## 7. Sao Lưu & Khôi Phục Dữ Liệu (Backup & Restore DB)
 Lệnh Backup Database tự động (Cron job):
+```text
     # Dump dữ liệu ra file nén kèm ngày tháng
     mongodump --out=/var/backups/db_$(date +%Y%m%d_%H%M%S)
+```
 Lệnh Khôi Phục (Restore):
+```text
     Bashmongorestore --dir=/var/backups/db_<FOLDER_NAME>/
+```
