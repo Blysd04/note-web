@@ -65,12 +65,12 @@ jobs:
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             export PATH=$PATH:/usr/local/bin
-            mv /tmp/noteapp-deploy//note-backend /root/var/www/note-web/be/note-backend.new
+            mv /tmp/noteapp-deploy/be/note-backend /root/var/www/note-web/be/note-backend.new
             chmod +x /root/var/www/note-web/be/note-backend.new
             mv -f /root/var/www/note-web/be/note-backend.new /root/var/www/note-web/be/note-backend
 
-            rm -rf /root/var/www/note-web/frontend/dist
-            mv /tmp/noteapp-deploy/frontend/dist /root/var/www/note-web/frontend/dist
+            rm -rf /root/var/www/note-web//dist
+            mv /tmp/noteapp-deploy//dist /root/var/www/note-web//dist
             rm -rf /tmp/noteapp-deploy
 
             pm2 restart note-backend --update-env
